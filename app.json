@@ -1,0 +1,5 @@
+{
+  "name": "lookout-pwa",
+  "description": "A progressive web app to visualise and control an OpenAPS rig.",
+  "repository": "https://github.com/thebookins/lookout-pwa"
+}
