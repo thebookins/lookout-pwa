@@ -2,7 +2,7 @@
   "short_name": "Lookout",
   "name": "Lookout progressive web app",
   "start_url": "/",
-  "theme_color": "#f48c5b",
+  "theme_color": "#3f51b5",
   "background_color": "#ffffff",
   "display": "standalone",
   "orientation": "portrait",
