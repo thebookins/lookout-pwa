@@ -1,7 +1,9 @@
-// server.js
 const express = require('express');
 const app = express();
 const path = require('path');
+var compression = require('compression');
+
+app.use(compression());
 
 // If an incoming request uses
 // a protocol other than HTTPS,
