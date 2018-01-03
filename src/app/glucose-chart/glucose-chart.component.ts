@@ -8,13 +8,64 @@ import { Component, OnInit } from '@angular/core';
 export class GlucoseChartComponent implements OnInit {
 
   // lineChart
-  public lineChartData:Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
-    {data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C'}
+  public data:Array<any> = [
+    {
+      data: Array.apply(null, Array(36)).map((x, i) => ({x: 3 * (i - 35)/36, y: 6 + 3 * Math.sin(0.2 * (i - 35))})),
+      fill: false
+    },
+    {
+      data: Array.apply(null, Array(36)).map((x, i) => ({x: 3 * i/36, y: 6 + 3 * Math.sin(0.2 * i)})),
+      fill: false
+    }
   ];
 
-  public lineChartType:string = 'line';
+  public options:any = {
+//        devicePixelRatio: 2,
+    animation: {
+      duration: 0
+    },
+    pointBorderColor: 'green',
+    pointBackgroundColor: 'green',
+    scales: {
+      xAxes: [{
+        type: 'linear',
+        position: 'bottom',
+        ticks: {
+          min: -3,
+          max: +3,
+          stepSize: 1
+        },
+        // ticks: {
+        //   source: 'data'
+        // },
+        // time: {
+        //   min: Date.now() - 3*60*60000,
+        //   max: Date.now()
+        // }
+      }],
+      yAxes: [{
+        display: true,
+        ticks: {
+          suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+          suggestedMax: 20    // minimum will be 0, unless there is a lower value.
+        }
+      }]
+    },
+    legend: { display: false }
+  };
+
+  public colors:Array<any> = [
+      { // green
+        backgroundColor: 'green',
+        borderColor: 'green'
+      },
+      { // dark grey
+        backgroundColor: 'white',
+        borderColor: 'purple'
+      }
+    ];
+
+  // public lineChartType:string = 'line';
 
   constructor() { }
 

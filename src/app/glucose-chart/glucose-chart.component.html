@@ -1,7 +1,9 @@
 <div>
   <canvas baseChart
-              [datasets]="lineChartData"
-              [chartType]="lineChartType"></canvas>
+              [datasets]="data"
+              [chartType]="'line'"
+              [options]="options"
+              [colors]="colors"></canvas>
 
 
   <!-- <canvas id="line" class="chart chart-line" chart-data="data"
