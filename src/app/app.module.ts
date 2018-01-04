@@ -12,11 +12,14 @@ import { environment } from '../environments/environment';
 import { GlucoseComponent } from './glucose/glucose.component';
 import { GlucoseChartComponent } from './glucose-chart/glucose-chart.component';
 
+import { TimeAgoPipe } from 'time-ago-pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
     GlucoseComponent,
-    GlucoseChartComponent
+    GlucoseChartComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,

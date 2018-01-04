@@ -35,19 +35,12 @@ export class GlucoseChartComponent implements OnInit {
           max: +3,
           stepSize: 1
         },
-        // ticks: {
-        //   source: 'data'
-        // },
-        // time: {
-        //   min: Date.now() - 3*60*60000,
-        //   max: Date.now()
-        // }
       }],
       yAxes: [{
         display: true,
         ticks: {
           suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
-          suggestedMax: 20    // minimum will be 0, unless there is a lower value.
+          suggestedMax: 20    // maximim will be 20, unless there is a higher value.
         }
       }]
     },
