@@ -13,6 +13,7 @@ import { GlucoseComponent } from './glucose/glucose.component';
 import { GlucoseChartComponent } from './glucose-chart/glucose-chart.component';
 
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { GlucoseService } from './glucose.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { TimeAgoPipe } from 'time-ago-pipe';
     MatToolbarModule,
     ChartsModule
   ],
-  providers: [],
+  providers: [GlucoseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GlucoseService } from '../glucose.service';
+import { Glucose } from '../glucose';
 
 @Component({
   selector: 'app-glucose-chart',
@@ -7,20 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GlucoseChartComponent implements OnInit {
 
-  // lineChart
-  public data:Array<any> = [
-    {
-      data: Array.apply(null, Array(36)).map((x, i) => ({x: 3 * (i - 35)/36, y: 6 + 3 * Math.sin(0.2 * (i - 35))})),
-      fill: false
-    },
-    {
-      data: Array.apply(null, Array(36)).map((x, i) => ({x: 3 * i/36, y: 6 + 3 * Math.sin(0.2 * i)})),
-      fill: false
-    }
-  ];
+  glucose:Glucose[];
+  glucoseBaseTime:number;
+
+  public data:Array<any>;
 
   public options:any = {
-//        devicePixelRatio: 2,
     animation: {
       duration: 0
     },
@@ -39,8 +33,8 @@ export class GlucoseChartComponent implements OnInit {
       yAxes: [{
         display: true,
         ticks: {
-          suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
-          suggestedMax: 20    // maximim will be 20, unless there is a higher value.
+          suggestedMin: 70,    // minimum will be 0, unless there is a lower value.
+          suggestedMax: 130    // maximim will be 20, unless there is a higher value.
         }
       }]
     },
@@ -48,21 +42,57 @@ export class GlucoseChartComponent implements OnInit {
   };
 
   public colors:Array<any> = [
-      { // green
-        backgroundColor: 'green',
-        borderColor: 'green'
-      },
-      { // dark grey
-        backgroundColor: 'white',
-        borderColor: 'purple'
-      }
-    ];
+    { // green
+      backgroundColor: 'green',
+      borderColor: 'green'
+    },
+    { // purple circles
+      backgroundColor: 'white',
+      borderColor: 'purple'
+    }
+  ];
 
-  // public lineChartType:string = 'line';
+  getGlucose(): void {
+    const now = Date.now();
+    console.log("date is " + now);
+    this.glucoseService.getGlucose()
+    .subscribe(glucose => {
+      this.glucose = glucose;
+      this.data = [
+        {
+          data: this.glucose.map(entry => ({x: (entry.readDate.valueOf() - now) / 60 / 60000, y: entry.glucose})),
+          fill: false,
+          pointRadius: 2,
+          showLine: false
+        },
+        {
+          data: Array.apply(null, Array(36)).map((x, i) => ({x: 3 * i/36, y: 100 + 3 * Math.sin(0.2 * i)})),
+          fill: false,
+          pointRadius: 2,
+          showLine: false
+        }
+      ];
+      this.glucoseBaseTime = now;
 
-  constructor() { }
+      setInterval(() => {
+        const now = Date.now();
+        const timeInterval = (Date.now() - this.glucoseBaseTime) / 1000 / 60 / 60;
+        console.log('shifting by ' + timeInterval);
+        for (const dataset of this.data) {
+          for (const point of dataset) {
+            point.x -= timeInterval;
+          }
+        }
+        this.glucoseBaseTime = now;
+      }, 1000);
+
+    });
+  }
+
+  constructor(private glucoseService: GlucoseService) { }
 
   ngOnInit() {
+    this.getGlucose();
   }
 
 }
