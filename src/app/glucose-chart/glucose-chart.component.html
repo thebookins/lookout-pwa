@@ -1,6 +1,6 @@
 <div>
-  <canvas baseChart
-              [datasets]="data"
+  <canvas baseChart *ngIf="datasets"
+              [datasets]="datasets"
               [chartType]="'line'"
               [options]="options"
               [colors]="colors"></canvas>

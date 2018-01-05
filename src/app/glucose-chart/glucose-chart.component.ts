@@ -12,7 +12,7 @@ export class GlucoseChartComponent implements OnInit {
   glucose:Glucose[];
   glucoseBaseTime:number;
 
-  public data:Array<any>;
+  public datasets:Array<any>;
 
   public options:any = {
     animation: {
@@ -57,10 +57,12 @@ export class GlucoseChartComponent implements OnInit {
     console.log("date is " + now);
     this.glucoseService.getGlucose()
     .subscribe(glucose => {
+      console.log(glucose);
       this.glucose = glucose;
-      this.data = [
+      this.datasets = [
         {
-          data: this.glucose.map(entry => ({x: (entry.readDate.valueOf() - now) / 60 / 60000, y: entry.glucose})),
+          // TODO: have to use Date.parse() here because of https://stackoverflow.com/q/46559268
+          data: this.glucose.map(entry => ({x: (Date.parse(entry.readDate) - now) / 60 / 60000, y: entry.glucose})),
           fill: false,
           pointRadius: 2,
           showLine: false
@@ -72,20 +74,23 @@ export class GlucoseChartComponent implements OnInit {
           showLine: false
         }
       ];
+      console.log(this.datasets);
       this.glucoseBaseTime = now;
 
-      setInterval(() => {
-        const now = Date.now();
-        const timeInterval = (Date.now() - this.glucoseBaseTime) / 1000 / 60 / 60;
-        console.log('shifting by ' + timeInterval);
-        for (const dataset of this.data) {
-          for (const point of dataset) {
-            point.x -= timeInterval;
-          }
-        }
-        this.glucoseBaseTime = now;
-      }, 1000);
-
+    //   setInterval(() => {
+    //     const now = Date.now();
+    //     const timeInterval = (Date.now() - this.glucoseBaseTime) / 1000 / 60 / 60;
+    //     console.log('shifting by ' + timeInterval);
+    //     for (const dataset of this.data) {
+    //       for (const point of dataset.data) {
+    //         point.x -= timeInterval;
+    //       }
+    //     }
+    //     this.glucoseBaseTime = now;
+    //     // trick Angular into repainting
+    //     this.data = this.data.slice();
+    //   }, 1000);
+    //
     });
   }
 
