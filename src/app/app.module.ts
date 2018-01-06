@@ -13,8 +13,9 @@ import { environment } from '../environments/environment';
 import { GlucoseComponent } from './glucose/glucose.component';
 import { GlucoseChartComponent } from './glucose-chart/glucose-chart.component';
 
-import { TimeAgoPipe } from 'time-ago-pipe';
+import { TimeAgoPipe } from './time-ago.pipe';
 import { GlucoseService } from './glucose.service';
+
 
 // TODO: remove this fake HTTP server when we have our real one
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';

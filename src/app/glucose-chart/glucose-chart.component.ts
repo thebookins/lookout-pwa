@@ -57,7 +57,6 @@ export class GlucoseChartComponent implements OnInit {
     console.log("date is " + now);
     this.glucoseService.getGlucose()
     .subscribe(glucose => {
-      console.log(glucose);
       this.glucose = glucose;
       this.datasets = [
         {
