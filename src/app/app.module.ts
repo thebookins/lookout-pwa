@@ -19,6 +19,8 @@ import { GlucoseService } from './glucose.service';
 // TODO: remove this fake HTTP server when we have our real one
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
+import { MessagesComponent } from './messages/messages.component';
+import { MessageService } from './message.service';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { InMemoryDataService }  from './in-memory-data.service';
     AppComponent,
     GlucoseComponent,
     GlucoseChartComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,7 @@ import { InMemoryDataService }  from './in-memory-data.service';
       InMemoryDataService, { dataEncapsulation: false }
     )
   ],
-  providers: [GlucoseService],
+  providers: [GlucoseService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
