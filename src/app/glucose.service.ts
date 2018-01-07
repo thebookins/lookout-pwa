@@ -45,7 +45,9 @@ export class GlucoseService {
         this.socket.disconnect();
       };
     })
-    return observable;
+    return observable.pipe(
+      tap(glucose => this.log(`got glucose of ${glucose.glucose}`))
+    );
   }
 
   /**
