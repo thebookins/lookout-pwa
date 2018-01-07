@@ -1,1 +1,11 @@
-{{ glucose.glucose }} mg/dl {{ glucose.readDate | timeAgo }}
+<!-- NOTE: asyc pipe here using the pattern in https://stackoverflow.com/a/36806047 -->
+{{ (glucose | async)?.glucose }} mg/dl {{ (glucose | async)?.readDate | timeAgo }}
+<div>
+  <label>Glucose:
+    <input #glucoseInput />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(glucoseInput.value); gluocseInput.value=''">
+    add
+  </button>
+</div>

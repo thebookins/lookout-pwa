@@ -1,9 +1,10 @@
 const express = require('express');
-const app = express();
+//const app = express();
 const path = require('path');
-var compression = require('compression');
+const compression = require('compression');
+const socketIO = require('socket.io');
 
-app.use(compression());
+//app.use(compression());
 
 // If an incoming request uses
 // a protocol other than HTTPS,
@@ -20,20 +21,31 @@ const forceSSL = function() {
   }
 }
 
-// Instruct the app
-// to use the forceSSL
-// middleware
-app.use(forceSSL());
+const server = express()
+  .use(compression())
+  .use(forceSSL())
+  // Run the app by serving the static files in the dist directory
+  .use(express.static(__dirname + '/dist'))
+  // For all GET requests, send back index.html so that PathLocationStrategy can be used
+  .get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/dist/index.html'));
+  })
+  .listen(process.env.PORT || 8080);
 
-// Run the app by serving the static files
-// in the dist directory
-app.use(express.static(__dirname + '/dist'));
-// For all GET requests, send back index.html
-// so that PathLocationStrategy can be used
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname + '/dist/index.html'));
+const io = socketIO(server);
+
+io.on('connection', (socket) => {
+  console.log('user connected');
+
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+
+  socket.on('add-message', (message) => {
+    io.emit('message', {type:'new-message', text: message});
+  });
 });
 
-// Start the app by listening on the default
-// Heroku port
-app.listen(process.env.PORT || 8080);
+setInterval(() => {
+  io.emit('glucose', {readDate: Date.now(), glucose: 234});
+}, 1000);
