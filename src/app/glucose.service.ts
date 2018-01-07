@@ -36,6 +36,7 @@ export class GlucoseService {
     console.log('in glucose getter');
     let glucose = 100;
     let observable = new Observable<Glucose>(observer => {
+      // TODO: we probably don't need to connect to the socket again each time
       this.socket = io.connect('/');
       this.socket.on('glucose', (data) => {
         observer.next(data);

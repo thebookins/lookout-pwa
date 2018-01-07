@@ -23,7 +23,7 @@ const forceSSL = function() {
 
 const server = express()
   .use(compression())
-  .use(forceSSL())
+//  .use(forceSSL())
   // Run the app by serving the static files in the dist directory
   .use(express.static(__dirname + '/dist'))
   // For all GET requests, send back index.html so that PathLocationStrategy can be used
