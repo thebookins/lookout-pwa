@@ -48,6 +48,7 @@ io.on('connection', (socket) => {
 
 let glucose = 100;
 setInterval(() => {
+  io.emit('glucose', {readDate: Date.now(), glucose});
+  glucose += 1;
   if (glucose >= 200) glucose = 100;
-  io.emit('glucose', {readDate: Date.now(), glucose++});
 }, 1000);
