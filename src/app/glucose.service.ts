@@ -14,7 +14,6 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class GlucoseService {
   private glucoseUrl = 'api/glucose';  // URL to web api
-  private url = 'http://localhost:4200';
   private socket;
 
   // this will eventually use a HTTP request to get an array of glucose
@@ -32,7 +31,7 @@ export class GlucoseService {
 
   x: number;
 
-  get glucose() {
+  getGlucose2(): Observable<Glucose> {
     console.log('in glucose getter');
     let glucose = 100;
     let observable = new Observable<Glucose>(observer => {
