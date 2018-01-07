@@ -36,7 +36,7 @@ export class GlucoseService {
     console.log('in glucose getter');
     let glucose = 100;
     let observable = new Observable<Glucose>(observer => {
-      this.socket = io(this.url);
+      this.socket = io.connect('/');
       this.socket.on('glucose', (data) => {
         observer.next(data);
       });
