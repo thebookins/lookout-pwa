@@ -31,12 +31,10 @@ export class GlucoseService {
 
   x: number;
 
-  getGlucose2(): Observable<Glucose> {
-    console.log('in glucose getter');
-    let glucose = 100;
+  get glucose(): Observable<Glucose> {
     let observable = new Observable<Glucose>(observer => {
       // TODO: we probably don't need to connect to the socket again each time
-      this.socket = io.connect('/');
+      this.socket = io('/');
       this.socket.on('glucose', (data) => {
         observer.next(data);
       });

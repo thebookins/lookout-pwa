@@ -32,7 +32,7 @@ export class GlucoseComponent implements OnInit {
   constructor(private glucoseService: GlucoseService) { }
 
   ngOnInit() {
-    this.glucose = this.glucoseService.getGlucose2();
+    this.glucose = this.glucoseService.glucose;
   }
 
 }
