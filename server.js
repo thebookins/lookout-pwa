@@ -2,7 +2,7 @@ const express = require('express');
 //const app = express();
 const path = require('path');
 const compression = require('compression');
-const socketIO = require('socket.io');
+const IO = require('./io');
 
 //app.use(compression());
 
@@ -23,7 +23,7 @@ const forceSSL = function() {
 
 const server = express()
   .use(compression())
-  .use(forceSSL())
+//  .use(forceSSL())
   // Run the app by serving the static files in the dist directory
   .use(express.static(__dirname + '/dist'))
   // For all GET requests, send back index.html so that PathLocationStrategy can be used
@@ -32,23 +32,4 @@ const server = express()
   })
   .listen(process.env.PORT || 8080);
 
-const io = socketIO(server);
-
-io.on('connection', (socket) => {
-  console.log('user connected');
-
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
-
-  socket.on('add-message', (message) => {
-    io.emit('message', {type:'new-message', text: message});
-  });
-});
-
-let glucose = 100;
-setInterval(() => {
-  io.emit('glucose', {readDate: Date.now(), glucose});
-  glucose += 1;
-  if (glucose >= 200) glucose = 100;
-}, 1000);
+IO(server);

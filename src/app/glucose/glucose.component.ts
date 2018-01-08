@@ -19,7 +19,10 @@ import { of } from 'rxjs/observable/of';
 
 export class GlucoseComponent implements OnInit {
 
-  glucose: Observable<Glucose>;
+  glucose: Glucose = null;
+
+  private sub: any;
+
   // glucose: Observable<Glucose> = of({
   //     readDate: new Date(),
   //     glucose: 100
@@ -32,7 +35,11 @@ export class GlucoseComponent implements OnInit {
   constructor(private glucoseService: GlucoseService) { }
 
   ngOnInit() {
-    this.glucose = this.glucoseService.glucose;
+//    this.glucose = this.glucoseService.glucose;
+    this.sub = this.glucoseService.glucose.subscribe(data => this.glucose = data);
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 }

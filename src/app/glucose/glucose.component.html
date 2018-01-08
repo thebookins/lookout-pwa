@@ -1,5 +1,8 @@
 <!-- NOTE: asyc pipe here using the pattern in https://stackoverflow.com/a/36806047 -->
-{{ (glucose | async)?.glucose }} mg/dl {{ (glucose | async)?.readDate | timeAgo }}
+<!-- {{ (glucose | async)?.glucose }} mg/dl {{ (glucose | async)?.readDate | timeAgo }} -->
+
+<!-- TODO: use *ngIF here -->
+{{ glucose.glucose }} mg/dl {{ glucose.readDate | timeAgo }}
 <!-- <div>
   <label>Glucose:
     <input #glucoseInput />
